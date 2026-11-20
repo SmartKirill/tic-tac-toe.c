@@ -203,10 +203,10 @@ int game() {
 		}
 	}
 	printf("Выберите символ игрока 1:");
-	scanf_s(" %c", &playersSymb[0]);
+	scanf_s(" %c", &playersSymb[0], 1);
 	while (1) {
 		printf("Выберите символ игрока 2:");
-		scanf_s(" %c", &playersSymb[1]);
+		scanf_s(" %c", &playersSymb[1], 1);
 		if (playersSymb[0] == playersSymb[1]) {
 			printf("Символы игрока 1 и игрока 2 должны быть разные!\n");
 		}
