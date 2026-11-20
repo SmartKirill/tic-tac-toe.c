@@ -3,7 +3,7 @@
 #define MAX 12
 
 extern int N, M;
-extern char playersSymb[2];
+extern char playersSymb[2][5];
 extern int board[MAX][MAX];
 
 void clearBoard();

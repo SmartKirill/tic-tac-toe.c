@@ -6,7 +6,7 @@
 #include "console.h"
 
 int N, M;
-char playersSymb[2];
+char playersSymb[2][5];
 int board[MAX][MAX];
 
 static int winR = -1, winC = -1;
@@ -139,7 +139,7 @@ void makeMove(int* playerNow) {
 		if (board[row][col] == 0 || board[row][col] == ' ') {
 			char symb = playersSymb[*playerNow];
 			board[row][col] = symb;
-			printf("%c", symb);
+			printf("%s", playersSymb[*playerNow]);
 			SetConsoleCursorPosition(hConsole, csbi.dwCursorPosition);
 			*playerNow = *playerNow == 0 ? 1 : 0;
 		}
@@ -164,7 +164,7 @@ void writeBoard() {
 		printf("───┤\n");
 	}
 	for (int j = 0; j < N; ++j) {
-		printf("│ %c ", board[M - 1][j] == 0 ? ' ' : board[M - 1][j]);
+		printf("│   ");
 	}
 	printf("│\n");
 	printf("└");
@@ -203,10 +203,10 @@ int game() {
 		}
 	}
 	printf("Выберите символ игрока 1:");
-	scanf_s(" %c", &playersSymb[0], 1);
+	scanf_s(" %4s", &playersSymb[0], 5);
 	while (1) {
 		printf("Выберите символ игрока 2:");
-		scanf_s(" %c", &playersSymb[1], 1);
+		scanf_s(" %4s", &playersSymb[1], 5);
 		if (playersSymb[0] == playersSymb[1]) {
 			printf("Символы игрока 1 и игрока 2 должны быть разные!\n");
 		}
