@@ -2,6 +2,7 @@
 #include <stdbool.h>
 #include <windows.h>
 #include <conio.h>
+#include <string.h>
 #include "game.h"
 #include "console.h"
 
@@ -48,7 +49,7 @@ void drawWinLine() {
 	}
 }
 
-int checkWin(char player) {
+int checkWin(int player) {
 	int count, len;
 
 	for (int i = 0; i < M; i++) {
@@ -136,9 +137,8 @@ void makeMove(int* playerNow) {
 	if (GetConsoleScreenBufferInfo(hConsole, &csbi)) {
 		int col = (csbi.dwCursorPosition.X - 2) / 4;
 		int row = (csbi.dwCursorPosition.Y - 1) / 2;
-		if (board[row][col] == 0 || board[row][col] == ' ') {
-			char symb = playersSymb[*playerNow];
-			board[row][col] = symb;
+		if (board[row][col] == 0) {
+			board[row][col] = *playerNow + 1;
 			printf("%s", playersSymb[*playerNow]);
 			SetConsoleCursorPosition(hConsole, csbi.dwCursorPosition);
 			*playerNow = *playerNow == 0 ? 1 : 0;
@@ -196,7 +196,7 @@ int game() {
 		printf("Введите размеры доски:");
 		scanf_s("%d %d", &N, &M);
 		if (N > MAX || M > MAX || N < 1 || M < 1) {
-			printf("Максимальный размер доски %dx%d\n", MAX, MAX);
+			printf("Максимальный размер доски %dx%d, минимальный 1x1\n", MAX, MAX);
 		}
 		else {
 			break;
@@ -233,7 +233,7 @@ int game() {
 			if (key == 77) moveCursorPos(1, 0);
 		}
 		else if (key == 13) {
-			char playerSymb = playersSymb[playerNow];
+			int playerSymb = playerNow+1;
 			makeMove(&playerNow);
 			if (checkWin(playerSymb)) {
 				playerNow = playerNow == 0 ? 1 : 0;
